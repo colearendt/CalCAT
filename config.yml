@@ -1,0 +1,6 @@
+default:
+  setup:
+    ga: UA-170240821-2
+    state: California
+    date_updated: June 7, 2020
+    contact_info: "<a href = 'mailto:covmodeling@cdph.cd.gov?subject=ModelDataBook'>covmodeling@cdph.ca.gov</a>"
