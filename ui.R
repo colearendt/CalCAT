@@ -17,6 +17,7 @@
 # Alpha Version : Released 6/8/2020
 #
 
+cfg <- config::get("setup")
 
 ui <- navbarPage(
 
@@ -31,7 +32,7 @@ ui <- navbarPage(
                       tags$head(
                           ######## Google Analytics Script Start ###############
                           HTML(
-                              "<script async src='https://www.googletagmanager.com/gtag/js?id=UA-170240821-2'></script>"
+                              glue::glue("<script async src='https://www.googletagmanager.com/gtag/js?id={cfg$ga}'></script>")
                           ),
                           includeScript("g-analytics.js"))
     ),
@@ -88,27 +89,11 @@ ui <- navbarPage(
                  ), #End of fluidRow
 
                  # FOOTER #
-                 fluidRow(br(),
-                         br(),
-                         hr()
-                ), #End of fluidRow
-                fluidRow(
-                      column(2,""),
-                      column(4,
-
-                             h4(paste0("Alpha Version | Released ",date_updated)),
-                             #h4("EXPIRES: April 10, 2020"),
-                             HTML("<h5>CONTACT: YOUR CONTACT INFO HERE</h5>"),
-                                                         HTML("<h5><a href='https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx' target='_blank'>CDPH COVID-19 Page</a>  |  <a href='https://covid19.ca.gov/' target='_blank'>ca.gov COVID-19 Page</a> | <a href= 'https://github.com/StateOfCalifornia/CalCAT' target='_blank'>CalCAT Open Source</a></h5> "),
-                             HTML("<h6>Icons provided by the nounproject.com: <a href='https://thenounproject.com/browse/?i=2683859' target='_blank'>Magnify</a> | <a href='https://thenounproject.com/browse/?i=772325' target='_blank'>Binoculars</a> | <a href='https://thenounproject.com/browse/?i=1630136' target='_blank'>Telescope</a>")
-                     ),
-                     column(4,
-                            img(src = 'calcat_logo.gif', align = "right"),
-                            br()
-
-                     ),
-                     column(2,"")
-                ) #End of fluidRow
+                generate_footer(
+                    date_updated, contact_info,
+                    additional_html =
+                        HTML("<h6>Icons provided by the nounproject.com: <a href='https://thenounproject.com/browse/?i=2683859' target='_blank'>Magnify</a> | <a href='https://thenounproject.com/browse/?i=772325' target='_blank'>Binoculars</a> | <a href='https://thenounproject.com/browse/?i=1630136' target='_blank'>Telescope</a>")
+                    )
              ) # End fluid page
     ), # End tab panel
 
@@ -167,22 +152,7 @@ ui <- navbarPage(
                           br(),
                           hr()
                  ), #End of fluidRow
-                 fluidRow(
-                     column(2,""),
-                     column(4,
-
-                            h4(paste0("Alpha Version | Released ",date_updated)),
-                            #h4("EXPIRES: April 10, 2020"),
-                            HTML("<h5>CONTACT: YOUR CONTACT INFO HERE</h5>"),
-                                                        HTML("<h5><a href='https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx' target='_blank'>CDPH COVID-19 Page</a>  |  <a href='https://covid19.ca.gov/' target='_blank'>ca.gov COVID-19 Page</a> | <a href= 'https://github.com/StateOfCalifornia/CalCAT' target='_blank'>CalCAT Open Source</a></h5> ")
-                     ),
-                     column(4,
-                            img(src = 'calcat_logo.gif', align = "right"),
-                            br()
-
-                     ),
-                     column(2,"")
-                 ) #End of fluidRow
+                 generate_footer(date_updated, contact_info)
               ) # End fluidPage
             ), # End tabPanel
 
@@ -281,22 +251,7 @@ ui <- navbarPage(
                                br(),
                                hr()
                       ), #End of fluidRow
-                      fluidRow(
-                          column(2,""),
-                          column(4,
-
-                                 h4(paste0("Alpha Version | Released ",date_updated)),
-                                 #h4("EXPIRES: April 10, 2020"),
-                                 HTML("<h5>CONTACT: YOUR CONTACT INFO HERE</h5>"),
-                                                             HTML("<h5><a href='https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx' target='_blank'>CDPH COVID-19 Page</a>  |  <a href='https://covid19.ca.gov/' target='_blank'>ca.gov COVID-19 Page</a> | <a href= 'https://github.com/StateOfCalifornia/CalCAT' target='_blank'>CalCAT Open Source</a></h5> ")
-                          ),
-                          column(4,
-                                 img(src = 'calcat_logo.gif', align = "right"),
-                                 br()
-
-                          ),
-                          column(2,"")
-                      ) #End of fluidRow
+                      generate_footer(date_updated, contact_info)
 
              ) #End of fluidPage
     ), #End of tabPanel Short-term forecasts
@@ -403,23 +358,7 @@ ui <- navbarPage(
                   ), #End of TabsetPanel
 
                   # FOOTER #
-                  fluidRow(
-                      column(2,""),
-                      column(4,
-
-                             h4(paste0("Alpha Version | Released ",date_updated)),
-                             #h4("EXPIRES: April 10, 2020"),
-                             HTML("<h5>CONTACT: YOUR CONTACT INFO HERE</h5>"),
-                                                         HTML("<h5><a href='https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx' target='_blank'>CDPH COVID-19 Page</a>  |  <a href='https://covid19.ca.gov/' target='_blank'>ca.gov COVID-19 Page</a> | <a href= 'https://github.com/StateOfCalifornia/CalCAT' target='_blank'>CalCAT Open Source</a></h5> ")
-                      ),
-                      column(4,
-                             img(src = 'calcat_logo.gif', align = "right"),
-                             br()
-
-                      ),
-                      column(2,"")
-                  ) #End of fluidRow
-
+                  generate_footer(date_updated, contact_info)
               ) #End of fluidPage
             ), # End tabPanel for Long-term Epi Models
 
@@ -515,22 +454,7 @@ ui <- navbarPage(
                          br(),
                          hr()
                 ), #End of fluidRow
-                fluidRow(
-                    column(2,""),
-                    column(4,
-
-                           h4(paste0("Alpha Version | Released ",date_updated)),
-                           #h4("EXPIRES: April 10, 2020"),
-                           HTML("<h5>CONTACT: <a href = 'mailto:covmodeling@cdph.cd.gov?subject=ModelDataBook'>covmodeling@cdph.ca.gov</a></h5>"),
-                                                       HTML("<h5><a href='https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx' target='_blank'>CDPH COVID-19 Page</a>  |  <a href='https://covid19.ca.gov/' target='_blank'>ca.gov COVID-19 Page</a> | <a href= 'https://github.com/StateOfCalifornia/CalCAT' target='_blank'>CalCAT Open Source</a></h5> ")
-                    ),
-                    column(4,
-                           img(src = 'calcat_logo.gif', align = "right"),
-                           br()
-
-                    ),
-                    column(2,"")
-                ) #End of fluidRow
+                generate_footer(date_updated, contact_info)
              ) #End of fluidPage
     ), #End of tabPanel for Technical Notes
 
