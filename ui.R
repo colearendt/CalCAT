@@ -19,6 +19,23 @@
 
 cfg <- config::get("setup")
 
+# replace placeholder in g-analytics.tmpl.js
+ga_js_tmpl <- readLines("g-analytics.tmpl.js")
+ga_js <- purrr::map_chr(
+    ga_js_tmpl,
+    ~ glue::glue(
+        .x,
+        .open = "!!", .close = "!!",
+        .envir = list(
+            GA_PLACEHOLDER = cfg$ga
+        )
+        )
+    )
+writeLines(ga_js, "g-analytics.js")
+
+
+
+## BEGIN UI
 ui <- navbarPage(
 
     title = paste0(state_name, " COVID Assessment Tool - Open Source"),
