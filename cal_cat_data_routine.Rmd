@@ -40,13 +40,15 @@ library(rmarkdown)
 library(kableExtra)
 library(googlesheets4)
 
+cfg <- config::get("setup")
+
 sapply(list.files("R", full.names = T), source)
 
 ###############################################################
 ############         PARAMTERS TO CHANGE        ###############
 ###############################################################
 
-state_name <- "California"
+state_name <- cfg$state
 
 counties <- get_counties()
 state_abbrv <- get_state_abbrv(State = state_name)
